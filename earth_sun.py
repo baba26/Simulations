@@ -1,29 +1,30 @@
-'''
-
-stateup
-statedown
-stateboth
+from visual import vector,mag,norm
 
 
 
-'''
-tile = [{} for _ in range(10)]
+from visual import sphere,rate,color,display
+from math import cos,sin,pi
+from numpy import arange
 
-tile[0]['stateup'] = 1
-tile[0]['statedown'] = 1
-tile[0]['stateboth'] = 2
+d = display()
 
+m_earth = 100.0
+m_sun = 10000000.0
 
-'''
-tile[[1]['stateup'] = 3
-tile[[1]['statedown'] = 3
-tile[[1]['stateboth'] = 7
-'''
+g = 0.000001
 
-for i in range(1,10):
-tile[i]['stateup'] = tile[i-1]['stateup'] + tile[i-1]['stateboth']
-tile[i]['stateboth'] = tile[i-1]['stateup']*2 + tile[i-1]['stateboth']*2 + 1
-print "for {0} : {1}".format(i,tile[i])
+r = vector(70.0,0,0)
+v = vector(0,2.0,0)
 
+s_earth = sphere(pos=[r.x,r.y,r.z],radius=1,color = color.white)
 
+s_sun = sphere(pos=[0,0,0],radius=2,color = color.yellow)
 
+d.autoscale = False
+ 
+while True:
+    rate(30)
+    a = -1*norm(r)*((g*m_earth*m_sun)/(mag(r)**2))
+    v = v + a
+    r = r + v
+    s_earth.pos = [r.x,r.y,r.z]
